@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.feature.StringIndexerModel","timestamp":1746741219647,"sparkVersion":"3.5.1","uid":"StringIndexer_b2fe8fd09dea","paramMap":{"outputCol":"Diet_idx","inputCol":"Diet","handleInvalid":"keep"},"defaultParamMap":{"outputCol":"StringIndexer_b2fe8fd09dea__output","stringOrderType":"frequencyDesc","handleInvalid":"error"}}

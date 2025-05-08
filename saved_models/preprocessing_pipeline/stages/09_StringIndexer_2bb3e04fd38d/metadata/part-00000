@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.feature.StringIndexerModel","timestamp":1746741221932,"sparkVersion":"3.5.1","uid":"StringIndexer_2bb3e04fd38d","paramMap":{"inputCol":"Thalassemia","outputCol":"Thalassemia_idx","handleInvalid":"keep"},"defaultParamMap":{"outputCol":"StringIndexer_2bb3e04fd38d__output","stringOrderType":"frequencyDesc","handleInvalid":"error"}}

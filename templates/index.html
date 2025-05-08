@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Attack Prediction (Demo)</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: auto; }
+        h1, h2 { text-align: center; }
+        .disclaimer { color: red; font-weight: bold; text-align: center; margin-bottom: 20px; }
+        form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        label { font-weight: bold; }
+        input, select { padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 100%; box-sizing: border-box; }
+        button { grid-column: 1 / -1; padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #0056b3; }
+        #result { margin-top: 20px; padding: 15px; border: 1px solid #eee; border-radius: 4px; background-color: #f9f9f9; text-align: center; }
+        #result p { margin: 5px 0; }
+        /* Basic responsiveness */
+        @media (max-width: 600px) {
+            form { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Heart Attack Prediction</h1>
+    <p class="disclaimer">Disclaimer: This prediction is based on a model trained with 0.4 Million records. It is for demonstration purposes only and should not be used for real medical diagnosis.</p>
+
+    <form id="prediction-form">
+        <!-- Add form fields for all 31 features -->
+        <div><label for="Age">Age:</label><input type="number" id="Age" name="Age" value="50" required></div>
+        <div><label for="Gender">Gender:</label><select id="Gender" name="Gender"><option value="Male">Male</option><option value="Female">Female</option></select></div>
+        <div><label for="Cholesterol">Cholesterol:</label><input type="number" id="Cholesterol" name="Cholesterol" value="200" required></div>
+        <div><label for="BloodPressure">Blood Pressure (Systolic):</label><input type="number" id="BloodPressure" name="BloodPressure" value="140" required></div>
+        <div><label for="HeartRate">Heart Rate:</label><input type="number" id="HeartRate" name="HeartRate" value="80" required></div>
+        <div><label for="BMI">BMI:</label><input type="number" step="0.1" id="BMI" name="BMI" value="25.0" required></div>
+        <div><label for="Smoker">Smoker (1=Yes, 0=No):</label><select id="Smoker" name="Smoker"><option value="0">No</option><option value="1">Yes</option></select></div>
+        <div><label for="Diabetes">Diabetes (1=Yes, 0=No):</label><select id="Diabetes" name="Diabetes"><option value="0">No</option><option value="1">Yes</option></select></div>
+        <div><label for="Hypertension">Hypertension (1=Yes, 0=No):</label><select id="Hypertension" name="Hypertension"><option value="0">No</option><option value="1">Yes</option></select></div>
+        <div><label for="FamilyHistory">Family History (1=Yes, 0=No):</label><select id="FamilyHistory" name="FamilyHistory"><option value="0">No</option><option value="1">Yes</option></select></div>
+        <div><label for="PhysicalActivity">Physical Activity (hours/week):</label><input type="number" id="PhysicalActivity" name="PhysicalActivity" value="3" required></div>
+        <div><label for="AlcoholConsumption">Alcohol Consumption (drinks/week):</label><input type="number" id="AlcoholConsumption" name="AlcoholConsumption" value="1" required></div>
+        <div><label for="Diet">Diet:</label><select id="Diet" name="Diet"><option value="Healthy">Healthy</option><option value="Moderate">Moderate</option><option value="Unhealthy">Unhealthy</option></select></div>
+        <div><label for="StressLevel">Stress Level (1-10):</label><input type="number" id="StressLevel" name="StressLevel" min="1" max="10" value="5" required></div>
+        <div><label for="Ethnicity">Ethnicity:</label><select id="Ethnicity" name="Ethnicity"><option value="Hispanic">Hispanic</option><option value="Asian">Asian</option><option value="Black">Black</option><option value="White">White</option><option value="Other">Other</option></select></div>
+        <div><label for="Income">Income:</label><input type="number" id="Income" name="Income" value="50000" required></div>
+        <div><label for="EducationLevel">Education Level:</label><select id="EducationLevel" name="EducationLevel"><option value="High School">High School</option><option value="College">College</option><option value="Graduate Degree">Graduate Degree</option><option value="Other">Other</option></select></div>
+        <div><label for="Medication">Medication (Yes/No):</label><select id="Medication" name="Medication"><option value="No">No</option><option value="Yes">Yes</option></select></div>
+        <div><label for="ChestPainType">Chest Pain Type:</label><select id="ChestPainType" name="ChestPainType"><option value="Typical">Typical</option><option value="Atypical">Atypical</option><option value="Non-anginal">Non-anginal</option><option value="Asymptomatic">Asymptomatic</option></select></div>
+        <div><label for="ECGResults">ECG Results:</label><select id="ECGResults" name="ECGResults"><option value="Normal">Normal</option><option value="ST-T abnormality">ST-T abnormality</option><option value="LV hypertrophy">LV hypertrophy</option></select></div>
+        <div><label for="MaxHeartRate">Max Heart Rate Achieved:</label><input type="number" id="MaxHeartRate" name="MaxHeartRate" value="150" required></div>
+        <div><label for="ST_Depression">ST Depression:</label><input type="number" step="0.1" id="ST_Depression" name="ST_Depression" value="1.0" required></div>
+        <div><label for="ExerciseInducedAngina">Exercise Induced Angina (Yes/No):</label><select id="ExerciseInducedAngina" name="ExerciseInducedAngina"><option value="No">No</option><option value="Yes">Yes</option></select></div>
+        <div><label for="Slope">Slope:</label><select id="Slope" name="Slope"><option value="Upsloping">Upsloping</option><option value="Flat">Flat</option><option value="Downsloping">Downsloping</option></select></div>
+        <div><label for="NumberOfMajorVessels">Number of Major Vessels:</label><input type="number" id="NumberOfMajorVessels" name="NumberOfMajorVessels" min="0" max="4" value="0" required></div>
+        <div><label for="Thalassemia">Thalassemia:</label><select id="Thalassemia" name="Thalassemia"><option value="Normal">Normal</option><option value="Fixed defect">Fixed defect</option><option value="Reversible defect">Reversible defect</option></select></div>
+        <div><label for="PreviousHeartAttack">Previous Heart Attack (1=Yes, 0=No):</label><select id="PreviousHeartAttack" name="PreviousHeartAttack"><option value="0">No</option><option value="1">Yes</option></select></div>
+        <div><label for="StrokeHistory">Stroke History (1=Yes, 0=No):</label><select id="StrokeHistory" name="StrokeHistory"><option value="0">No</option><option value="1">Yes</option></select></div>
+        <div><label for="Residence">Residence:</label><select id="Residence" name="Residence"><option value="Urban">Urban</option><option value="Suburban">Suburban</option><option value="Rural">Rural</option></select></div>
+        <div><label for="EmploymentStatus">Employment Status:</label><select id="EmploymentStatus" name="EmploymentStatus"><option value="Employed">Employed</option><option value="Unemployed">Unemployed</option><option value="Retired">Retired</option><option value="Student">Student</option></select></div>
+        <div><label for="MaritalStatus">Marital Status:</label><select id="MaritalStatus" name="MaritalStatus"><option value="Single">Single</option><option value="Married">Married</option><option value="Divorced">Divorced</option><option value="Widowed">Widowed</option></select></div>
+
+        <button type="submit">Predict Heart Attack Risk</button>
+    </form>
+
+    <div id="result">Prediction will appear here...</div>
+
+    <script>
+        document.getElementById("prediction-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(event.target);
+            const data = {};
+            formData.forEach((value, key) => {
+                // Convert numerical fields from string if necessary
+                const numFields = ['Age', 'Cholesterol', 'BloodPressure', 'HeartRate', 'BMI', 'Smoker', 'Diabetes', 'Hypertension', 'FamilyHistory', 'PhysicalActivity', 'AlcoholConsumption', 'StressLevel', 'Income', 'MaxHeartRate', 'ST_Depression', 'NumberOfMajorVessels', 'PreviousHeartAttack', 'StrokeHistory'];
+                if (numFields.includes(key)) {
+                    data[key] = parseFloat(value); // Use parseFloat for consistency
+                } else {
+                    data[key] = value;
+                }
+            });
+
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = "Predicting...";
+
+            fetch("/api/predict", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.error) {
+                    resultDiv.innerHTML = `<p style="color:red;">Error: ${result.error}</p>`;
+                } else {
+                    resultDiv.innerHTML = 
+                        `<p><strong>Prediction:</strong> ${result.prediction}</p>` +
+                        `<p><strong>Confidence:</strong> ${result.confidence}</p>` +
+                        `<p style="color:red; font-weight:bold;">${result.disclaimer}</p>`;
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                resultDiv.innerHTML = `<p style="color:red;">An error occurred while fetching the prediction.</p>`;
+            });
+        });
+    </script>
+
+</body>
+</html>
+
